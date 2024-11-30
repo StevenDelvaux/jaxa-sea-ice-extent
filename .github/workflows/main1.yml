@@ -1,9 +1,9 @@
-name: Run The Python Script Daily
+name: Run Python Script Daily Test
 
 on:
   schedule:
     # Run at 5:00 a.m. UTC every day
-    - cron: '0 23 * * *'
+    - cron: '20 23 * * *'
 
 jobs:
   run-script:
