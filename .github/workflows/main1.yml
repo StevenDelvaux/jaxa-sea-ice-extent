@@ -3,7 +3,7 @@ name: Run Python Script Daily Test
 on:
   schedule:
     # Run at 5:00 a.m. UTC every day
-    - cron: '20 12 * * *'
+    - cron: '10 13 * * *'
 
 jobs:
   run-script:
