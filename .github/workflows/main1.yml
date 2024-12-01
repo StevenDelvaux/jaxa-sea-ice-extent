@@ -3,7 +3,7 @@ name: Run Python Script Daily Test
 on:
   schedule:
     # Run at 5:00 a.m. UTC every day
-    - cron: '50 13 * * *'
+    - cron: '20 14 * * *'
 
 jobs:
   run-script:
@@ -12,6 +12,13 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+    - name: Use secret variables
+      run: echo "Set environment variables"
+      env:
+        dropbox_access_token: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+        app_key: ${{ secrets.APP_KEY }}
+        app_secret: ${{ secrets.APP_SECRET }}
+        oauth2_refresh_token: ${{ secrets.OAUTH2_REFRESH_TOKEN }}
 
     - name: Set up Python
       uses: actions/setup-python@v4
