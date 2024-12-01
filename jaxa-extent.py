@@ -339,10 +339,10 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	ax.tick_params(which='minor', length=0)
 	
 def uploadToDropbox(filenames):
-	dropbox_access_token = config('dropbox_access_token')
-	app_key = config('app_key')
-	app_secret = config('app_secret')
-	oauth2_refresh_token = config('oauth2_refresh_token')
+	dropbox_access_token = config('DROPBOX_ACCESS_TOKEN')
+	app_key = config('APP_KEY')
+	app_secret = config('APP_SECRET')
+	oauth2_refresh_token = config('OAUTH2_REFRESH_TOKEN')
 	client = dropbox.Dropbox(oauth2_access_token=dropbox_access_token,app_key=app_key,app_secret=app_secret,oauth2_refresh_token=oauth2_refresh_token)
 	print("[SUCCESS] dropbox account linked")
 	
