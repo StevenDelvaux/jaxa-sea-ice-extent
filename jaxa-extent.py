@@ -84,6 +84,7 @@ def generateRankSummary(data, extent):
 	smallFont = ImageFont.truetype("arialbd.ttf", smallFontsize)
 	superscriptFont = ImageFont.truetype("arialbd.ttf", superscriptFontsize)	
 	color = (0,0,0)
+	years = 46
 	
 	row = matrix[:, day]
 	rank = getRank(row)
