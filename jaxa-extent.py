@@ -308,8 +308,9 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	else:
 		avg = np.zeros(365)
 
-	matrix = np.hstack((matrix[:,offset:], np.vstack((matrix[1:,0:offset],np.full((1,offset), -1)))))
-		
+	matrix = np.hstack((matrix[:,offset:], np.vstack((matrix[1:,0:offset],np.full((1,offset), np.nan)))))
+	if data[-1,offset+1] == 'nan':
+		matrix = matrix[0:-1,:]
 	dates = np.arange(0,365)
 		
 	ax.plot(dates, matrix[-15,:]-avg, label='2010/11', color=(0.65,0.65,0.65));
