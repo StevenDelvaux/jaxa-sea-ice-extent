@@ -63,7 +63,7 @@ def generateRankSummary(data, extent):
 	
 	lastSavedDay = getLatestDay(data)
 	print(lastSavedDay)
-	lastSavedYear = 2024
+	lastSavedYear = 2025
 	date = getDateFromDayOfYear(lastSavedDay, lastSavedYear)
 	
 	day = lastSavedDay-1
@@ -84,7 +84,7 @@ def generateRankSummary(data, extent):
 	smallFont = ImageFont.truetype("arialbd.ttf", smallFontsize)
 	superscriptFont = ImageFont.truetype("arialbd.ttf", superscriptFontsize)	
 	color = (0,0,0)
-	years = 46
+	years = 47
 	
 	row = matrix[:, day]
 	rank = getRank(row)
@@ -107,7 +107,7 @@ def generateRankSummary(data, extent):
 			currentRank = rank
 		verticalOffset = 60 + 21*i
 		year = 1979 + index
-		if year == 2024:
+		if year == 2025:
 			color = (255,0,0)
 		else:
 			color = (0,0,0)
@@ -124,7 +124,7 @@ def generateSummary(data, extent):
 
 	lastSavedDay = getLatestDay(data)
 	print(lastSavedDay)
-	lastSavedYear = 2024
+	lastSavedYear = 2025
 	lastSavedDate = getDateFromDayOfYear(lastSavedDay, lastSavedYear)
 	print(lastSavedDate)
 
@@ -162,7 +162,7 @@ def generateSummary(data, extent):
 	earliestDay = dayList.pop()
 	dayList.reverse()
 	
-	previousValue = matrix[-1, day-earliestDay]
+	previousValue = matrix[-1 if day-earliestDay >= 0 else -2, day-earliestDay]
 	color = (0,0,0)
 	hemisphere = 'Arctic' if north else 'Antarctic'	
 	printimtext.text((37 + (12 if north else 0) + (0), 4), 'JAXA ' + hemisphere + ' sea ice extent'  + ': last ' + str(days) + ' days', color, font=largeFont)
@@ -181,8 +181,8 @@ def generateSummary(data, extent):
 		date = lastSavedDate - timedelta(days = offset)
 		print('summary date: ',counter,offset,date)
 		counter += 1 
-		value = matrix[-1, day-offset]
-		rank = getRankString(matrix[:, day-offset])
+		value = matrix[-1, day-offset if day-offset >= 0 else -2]
+		rank = getRankString(matrix[:, day-offset] if day-offset >= 0 else matrix[0:-1, day-offset])
 		dailyDelta = round(1000*(value-previousValue))
 		dailyDeltaStr = ('  ' if abs(dailyDelta) < 100 else '') + ('  ' if abs(dailyDelta) < 10 else '') + ('+' if dailyDelta >= 0 else ' ') + str(dailyDelta) + 'k' # km'
 		print('last daily value',value,rank,date)
@@ -218,7 +218,7 @@ def processAuto():
 	lastSavedDay = getLatestDay(data)
 	print(lastSavedDay)
 	downloadJaxaExtentFile(north, tempfilename)
-	newValues = loadDownloadedJaxaExtentFile(tempfilename, lastSavedDay)
+	newValues = loadDownloadedJaxaExtentFile(tempfilename, lastSavedDay if lastSavedDay >= 59 else lastSavedDay-1)
 	print(newValues)
 	appendToCsvFile(newValues, filename + '.csv')
 	time.sleep(3)
@@ -277,10 +277,10 @@ def loadJaxaExtentFile(filename):
 	
 def getLatestDay(data):
 	print(data.shape)
-	currentyear = data[-1,1:]
+	currentyear = data[-1,:]
 	print(currentyear.shape)
 	lastDay = np.where(currentyear != 'nan')[-1][-1]
-	return lastDay + 1
+	return lastDay
 	
 def appendToCsvFile(data, filename):
 	if len(data) == 0:
@@ -380,7 +380,7 @@ else:
 	lastSavedDay = getLatestDay(data)
 	print(lastSavedDay)
 	downloadJaxaExtentFile(north, tempfilename)
-	newValues = loadDownloadedJaxaExtentFile(tempfilename, lastSavedDay)
+	newValues = loadDownloadedJaxaExtentFile(tempfilename, lastSavedDay if lastSavedDay >= 59 else lastSavedDay-1)
 	print(newValues)
 	appendToCsvFile(newValues, filename + '.csv')
 	time.sleep(3)
