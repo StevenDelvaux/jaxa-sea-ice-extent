@@ -181,7 +181,7 @@ def generateSummary(data, extent):
 		date = lastSavedDate - timedelta(days = offset)
 		print('summary date: ',counter,offset,date)
 		counter += 1 
-		value = matrix[-1, day-offset if day-offset >= 0 else -2]
+		value = matrix[-1 if day-offset >= 0 else -2, day-offset]
 		rank = getRankString(matrix[:, day-offset] if day-offset >= 0 else matrix[0:-1, day-offset])
 		dailyDelta = round(1000*(value-previousValue))
 		dailyDeltaStr = ('  ' if abs(dailyDelta) < 100 else '') + ('  ' if abs(dailyDelta) < 10 else '') + ('+' if dailyDelta >= 0 else ' ') + str(dailyDelta) + 'k' # km'
