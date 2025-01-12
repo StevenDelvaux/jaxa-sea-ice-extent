@@ -226,7 +226,7 @@ def processAuto():
 	
 	extentGraphFilename =  'jaxa-' + hemisphere + '-extent.png'
 	extentAnomalyGraphFilename = 'jaxa-' + hemisphere + '-extent-anomaly.png'
-	saveExtentGraph(3 if north else 0, 14 if north else 20, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 4 if north else 1)
+	saveExtentGraph(7 if north else 0, 15 if north else 19, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 4 if north else 1)
 	saveExtentGraph(-3 if north else -3, 0.1 if north else 2.5, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 4 if north else 2, True)
 	
 	extentSummary = generateSummary(data, True)
@@ -300,7 +300,7 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	
 	matrix = data[1:,1:].astype(float)
 	print(matrix.shape)
-	offset = 273
+	offset = 304
 
 	if anomaly:
 		avg = np.mean((matrix[11:41,:]), axis=0)
@@ -331,12 +331,12 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	ax.set_ylabel("Sea ice extent" + (' anomaly' if anomaly else '') + " (million km$^2\!$)")
 	ax.set_title(name)
 	ax.legend(loc=legendpos, prop={'size': 8})
-	ax.axis([0, 123, ymin, ymax])
+	ax.axis([0, 120, ymin, ymax])
 	ax.grid(True);
 	
-	months = ['Oct', 'Nov', 'Dec', 'Jan']
-	ax.set_xticks([0,31,61,92,123], ['', '', '', '', '']) 
-	ax.xaxis.set_minor_locator(ticker.FixedLocator([15.5,46,76.5,107.5]))
+	months = ['Nov', 'Dec', 'Jan', 'Feb']
+	ax.set_xticks([0,30,61,92,120], ['', '', '', '', '']) 
+	ax.xaxis.set_minor_locator(ticker.FixedLocator([15,45.5,76.5,106]))
 	ax.xaxis.set_minor_formatter(ticker.FixedFormatter(months))
 	ax.tick_params(which='minor', length=0)
 	
@@ -388,7 +388,7 @@ else:
 	
 	extentGraphFilename =  'jaxa-' + hemisphere + '-extent.png'
 	extentAnomalyGraphFilename = 'jaxa-' + hemisphere + '-extent-anomaly.png'
-	saveExtentGraph(4 if north else 0, 14 if north else 20, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 4 if north else 1)
+	saveExtentGraph(7 if north else 0, 15 if north else 19, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 4 if north else 1)
 	saveExtentGraph(-3 if north else -3, 0.1 if north else 2.5, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 4 if north else 2, True)
 	
 	extentSummary = generateSummary(data, True)
