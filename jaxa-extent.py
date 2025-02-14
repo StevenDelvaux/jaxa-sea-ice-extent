@@ -216,9 +216,9 @@ def processAuto():
 	
 	data = loadJaxaExtentFile(filename)
 	lastSavedDay = getLatestDay(data)
-	print(lastSavedDay)
+	lastSavedDay = lastSavedDay if lastSavedDay >= 59 and yesterdayYear % 4 == 0 else lastSavedDay-1
 	downloadJaxaExtentFile(north, tempfilename)
-	newValues = loadDownloadedJaxaExtentFile(tempfilename, lastSavedDay if lastSavedDay >= 59 else lastSavedDay-1)
+	newValues = loadDownloadedJaxaExtentFile(tempfilename, lastSavedDay)
 	print(newValues)
 	appendToCsvFile(newValues, filename + '.csv')
 	time.sleep(3)
@@ -260,7 +260,10 @@ def loadDownloadedJaxaExtentFile(filename, lastSavedDay):
 	currentyear = data[1:,-1]
 	print(currentyear.shape)
 	lastDay = np.where(currentyear != '-9999')[-1][-1]
-	print(lastDay)
+	print(lastDay, yesterdayDayofyear)
+	if lastDay < yesterdayDayofyear:
+		raise Exception("Latest day unavailable")
+	
 	if lastDay > lastSavedDay:
 		return (currentyear[lastSavedDay+1:lastDay+1].astype(float)/1000000.0).astype(str)
 	else:
@@ -360,6 +363,10 @@ atotalextent = []
 ayear = []
 aday = []
 
+yesterday = datetime.today() - timedelta(days = 1)
+yesterdayYear = yesterday.year
+yesterdayDayofyear = yesterday.timetuple().tm_yday
+
 auto = True # change this to False when running the code locally
 
 if auto:
@@ -379,9 +386,10 @@ else:
 	
 	data = loadJaxaExtentFile(filename)
 	lastSavedDay = getLatestDay(data)
+	lastSavedDay = lastSavedDay if lastSavedDay >= 59 and yesterdayYear % 4 == 0 else lastSavedDay-1
 	print(lastSavedDay)
 	downloadJaxaExtentFile(north, tempfilename)
-	newValues = loadDownloadedJaxaExtentFile(tempfilename, lastSavedDay if lastSavedDay >= 59 else lastSavedDay-1)
+	newValues = loadDownloadedJaxaExtentFile(tempfilename, lastSavedDay)
 	print(newValues)
 	appendToCsvFile(newValues, filename + '.csv')
 	time.sleep(3)
