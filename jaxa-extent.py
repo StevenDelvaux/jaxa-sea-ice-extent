@@ -261,7 +261,7 @@ def loadDownloadedJaxaExtentFile(filename, lastSavedDay):
 	print(currentyear.shape)
 	lastDay = np.where(currentyear != '-9999')[-1][-1]
 	print(lastDay, yesterdayDayofyear)
-	if lastDay < yesterdayDayofyear:
+	if lastDay < yesterdayDayofyear-1:
 		raise Exception("Latest day unavailable")
 	
 	if lastDay > lastSavedDay:
