@@ -13,7 +13,7 @@ import dropbox
 #import upload_to_dropbox
 
 monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-monthNamesFull = ['Jan','Feb','March','April','May','June','July','Aug','Sep','Oct','Nov','Dec']
+monthNamesFull = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec']
 monthLengths = [31,28,31,30,31,30,31,31,30,31,30,31]
 
 putOnDropbox = True
@@ -258,9 +258,10 @@ def loadDownloadedJaxaExtentFile(filename, lastSavedDay):
 	data = np.loadtxt(filename + ".csv", delimiter=",", dtype=str)
 	print(data.shape)
 	currentyear = data[1:,-1]
+	currentyear = currentyear[currentyear != '-9999']
 	print(currentyear.shape)
 	lastDay = np.where(currentyear != '-9999')[-1][-1]
-	print(lastDay, yesterdayDayofyear)
+	print('inside load downloaded', lastDay, yesterdayDayofyear)
 	if lastDay < yesterdayDayofyear-1:
 		raise Exception("Latest day unavailable")
 	
@@ -338,8 +339,8 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	ax.grid(True);
 	
 	months = ['Dec', 'Jan', 'Feb', 'Mar']
-	ax.set_xticks([0,31,62,92,121], ['', '', '', '', '']) 
-	ax.xaxis.set_minor_locator(ticker.FixedLocator([15.5,46.5,77,106.5]))
+	ax.set_xticks([0,31,62,90,121], ['', '', '', '', '']) 
+	ax.xaxis.set_minor_locator(ticker.FixedLocator([15.5,46.5,76,105.5]))
 	ax.xaxis.set_minor_formatter(ticker.FixedFormatter(months))
 	ax.tick_params(which='minor', length=0)
 	
