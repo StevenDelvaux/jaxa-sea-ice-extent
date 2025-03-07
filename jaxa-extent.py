@@ -226,7 +226,7 @@ def processAuto():
 	
 	extentGraphFilename =  'jaxa-' + hemisphere + '-extent.png'
 	extentAnomalyGraphFilename = 'jaxa-' + hemisphere + '-extent-anomaly.png'
-	saveExtentGraph(9 if north else 0, 15 if north else 15, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 4 if north else 9)
+	saveExtentGraph(11 if north else 0, 15 if north else 11, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 4 if north else 9)
 	saveExtentGraph(-1.5 if north else -3, 0.5 if north else 2.5, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 2 if north else 2, True)
 	
 	extentSummary = generateSummary(data, True)
@@ -304,7 +304,7 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	
 	matrix = data[1:,1:].astype(float)
 	print(matrix.shape)
-	offset = 334
+	offset = 0 #334
 
 	if anomaly:
 		avg = np.mean((matrix[11:41,:]), axis=0)
@@ -317,30 +317,31 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 		matrix = matrix[0:-1,:]
 	dates = np.arange(0,365)
 		
-	ax.plot(dates, matrix[-15,:]-avg, label='2010/11', color=(0.65,0.65,0.65));
-	ax.plot(dates, matrix[-14,:]-avg, label='2011/12', color=(0.44,0.19,0.63));
-	ax.plot(dates, matrix[-13,:]-avg, label='2012/13', color=(0.0,0.13,0.38));
-	ax.plot(dates, matrix[-12,:]-avg, label='2013/14', color=(0,0.44,0.75));
-	ax.plot(dates, matrix[-11,:]-avg, label='2014/15', color=(0.0,0.69,0.94));
-	ax.plot(dates, matrix[-10,:]-avg, label='2015/16', color=(0,0.69,0.31));
-	ax.plot(dates, matrix[-9,:]-avg, label='2016/17', color=(0.57,0.82,0.31));
-	ax.plot(dates, matrix[-8,:]-avg, label='2017/18', color=(1.0,0.75,0));
-	ax.plot(dates, matrix[-7,:]-avg, label='2018/19', color=(0.9,0.4,0.05));
-	ax.plot(dates, matrix[-6,:]-avg, label='2019/20', color=(1.0,0.5,0.5));
-	ax.plot(dates, matrix[-5,:]-avg, label='2020/21', color=(0.58,0.54,0.33));
-	ax.plot(dates, matrix[-4,:]-avg, label='2021/22', color=(0.4,0,0.2));
-	ax.plot(dates, matrix[-3,:]-avg, label='2022/23', color=(0.7,0.2,0.3));
-	ax.plot(dates, matrix[-2,:]-avg, label='2023/24', color=(0.6,0,0));
-	ax.plot(dates, matrix[-1,:]-avg, label='2024/25', color=(1.0,0,0), linewidth=3);
+	ax.plot(dates, matrix[-16,:]-avg, label='2010', color=(0.65,0.65,0.65));
+	ax.plot(dates, matrix[-15,:]-avg, label='2011', color=(0.44,0.19,0.63));
+	ax.plot(dates, matrix[-14,:]-avg, label='2012', color=(0.0,0.13,0.38));
+	ax.plot(dates, matrix[-13,:]-avg, label='2013', color=(0,0.44,0.75));
+	ax.plot(dates, matrix[-12,:]-avg, label='2014', color=(0.0,0.69,0.94));
+	ax.plot(dates, matrix[-11,:]-avg, label='2015', color=(0,0.69,0.31));
+	ax.plot(dates, matrix[-10,:]-avg, label='2016', color=(0.57,0.82,0.31));
+	ax.plot(dates, matrix[-9,:]-avg, label='2017', color=(1.0,0.75,0));
+	ax.plot(dates, matrix[-8,:]-avg, label='2018', color=(0.9,0.4,0.05));
+	ax.plot(dates, matrix[-7,:]-avg, label='2019', color=(1.0,0.5,0.5));
+	ax.plot(dates, matrix[-6,:]-avg, label='2020', color=(0.58,0.54,0.33));
+	ax.plot(dates, matrix[-5,:]-avg, label='2021', color=(0.4,0,0.2));
+	ax.plot(dates, matrix[-4,:]-avg, label='2022', color=(0.7,0.2,0.3));
+	ax.plot(dates, matrix[-3,:]-avg, label='2023', color=(0.5,0.3,0.1));
+	ax.plot(dates, matrix[-2,:]-avg, label='2024', color=(0.75,0,0));
+	ax.plot(dates, matrix[-1,:]-avg, label='2025', color=(1.0,0,0), linewidth=3);
 	ax.set_ylabel("Sea ice extent" + (' anomaly' if anomaly else '') + " (million km$^2\!$)")
 	ax.set_title(name)
 	ax.legend(loc=legendpos, prop={'size': 8})
-	ax.axis([0, 121, ymin, ymax])
+	ax.axis([0, 120, ymin, ymax])
 	ax.grid(True);
 	
-	months = ['Dec', 'Jan', 'Feb', 'Mar']
-	ax.set_xticks([0,31,62,90,121], ['', '', '', '', '']) 
-	ax.xaxis.set_minor_locator(ticker.FixedLocator([15.5,46.5,76,105.5]))
+	months = ['Jan', 'Feb', 'Mar', 'Apr']
+	ax.set_xticks([0,31,59,90,120], ['', '', '', '', '']) 
+	ax.xaxis.set_minor_locator(ticker.FixedLocator([15.5,45,74.5,105]))
 	ax.xaxis.set_minor_formatter(ticker.FixedFormatter(months))
 	ax.tick_params(which='minor', length=0)
 	
@@ -398,7 +399,7 @@ else:
 	
 	extentGraphFilename =  'jaxa-' + hemisphere + '-extent.png'
 	extentAnomalyGraphFilename = 'jaxa-' + hemisphere + '-extent-anomaly.png'
-	saveExtentGraph(9 if north else 0, 15 if north else 15, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 4 if north else 9)
+	saveExtentGraph(11 if north else 0, 15 if north else 11, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 4 if north else 9)
 	saveExtentGraph(-1.5 if north else -3, 0.5 if north else 2.5, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 2 if north else 2, True)
 	
 	extentSummary = generateSummary(data, True)
