@@ -226,8 +226,8 @@ def processAuto():
 	
 	extentGraphFilename =  'jaxa-' + hemisphere + '-extent.png'
 	extentAnomalyGraphFilename = 'jaxa-' + hemisphere + '-extent-anomaly.png'
-	saveExtentGraph(11 if north else 0, 15 if north else 11, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 4 if north else 9)
-	saveExtentGraph(-1.5 if north else -3, 0.5 if north else 2.5, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 2 if north else 2, True)
+	saveExtentGraph(10 if north else 0, 15 if north else 13, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 1 if north else 2)
+	saveExtentGraph(-1.5 if north else -2.5, 0.5 if north else 2, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 2 if north else 2, True)
 	
 	extentSummary = generateSummary(data, True)
 	extentRankSummary = generateRankSummary(data, True)
@@ -304,7 +304,7 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	
 	matrix = data[1:,1:].astype(float)
 	print(matrix.shape)
-	offset = 0 #334
+	offset = 31 #334
 
 	if anomaly:
 		avg = np.mean((matrix[11:41,:]), axis=0)
@@ -339,9 +339,9 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	ax.axis([0, 120, ymin, ymax])
 	ax.grid(True);
 	
-	months = ['Jan', 'Feb', 'Mar', 'Apr']
-	ax.set_xticks([0,31,59,90,120], ['', '', '', '', '']) 
-	ax.xaxis.set_minor_locator(ticker.FixedLocator([15.5,45,74.5,105]))
+	months = ['Feb', 'Mar', 'Apr', 'May']
+	ax.set_xticks([0,28,59,89,120], ['', '', '', '', '']) 
+	ax.xaxis.set_minor_locator(ticker.FixedLocator([14,43.5,74,104.5]))
 	ax.xaxis.set_minor_formatter(ticker.FixedFormatter(months))
 	ax.tick_params(which='minor', length=0)
 	
@@ -381,29 +381,5 @@ if auto:
 else:
 	north = False
 	putOnDropbox = False
-	hemisphere = "arctic" if north else "antarctic"
-	hemisphereCapitalized = "Arctic" if north else "Antarctic"
-	filename = 'jaxa-' + hemisphere + '-sea-ice-extent'
-	tempfilename = filename + '-temp'
 	
-	data = loadJaxaExtentFile(filename)
-	lastSavedDay = getLatestDay(data)
-	lastSavedDay = lastSavedDay if lastSavedDay >= 59 and yesterdayYear % 4 == 0 else lastSavedDay-1
-	print(lastSavedDay)
-	downloadJaxaExtentFile(north, tempfilename)
-	newValues = loadDownloadedJaxaExtentFile(tempfilename, lastSavedDay)
-	print(newValues)
-	appendToCsvFile(newValues, filename + '.csv')
-	time.sleep(3)
-	data = loadJaxaExtentFile(filename)
-	
-	extentGraphFilename =  'jaxa-' + hemisphere + '-extent.png'
-	extentAnomalyGraphFilename = 'jaxa-' + hemisphere + '-extent-anomaly.png'
-	saveExtentGraph(11 if north else 0, 15 if north else 11, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 4 if north else 9)
-	saveExtentGraph(-1.5 if north else -3, 0.5 if north else 2.5, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 2 if north else 2, True)
-	
-	extentSummary = generateSummary(data, True)
-	extentRankSummary = generateRankSummary(data, True)
-	
-	if putOnDropbox:
-		uploadToDropbox([filename + '.csv', extentGraphFilename, extentAnomalyGraphFilename, extentSummary, extentRankSummary])	
+	processAuto()
