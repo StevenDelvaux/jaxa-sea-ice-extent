@@ -8,6 +8,8 @@ import time
 from PIL import Image, ImageGrab, ImageDraw, ImageFont
 from decouple import config
 import dropbox
+import os
+import make_animation
 
 #sys.path.append('../sharedpython/')
 #import upload_to_dropbox
@@ -232,6 +234,8 @@ def processAuto():
 	extentSummary = generateSummary(data, True)
 	extentRankSummary = generateRankSummary(data, True)
 	
+	makeAnimation(yesterday, 10)
+	
 	if putOnDropbox:
 		uploadToDropbox([filename + '.csv', extentGraphFilename, extentAnomalyGraphFilename, extentSummary, extentRankSummary])
 
@@ -358,7 +362,33 @@ def uploadToDropbox(filenames):
 		dropbox_path= "/" + computer_path
 		client.files_upload(open(computer_path, "rb").read(), dropbox_path, mode=dropbox.files.WriteMode.overwrite)
 		print("[UPLOADED] {}".format(computer_path))
+
+def getImageFilename(date):
+	return "AM2SI" + str(date.year) + padzeros(date.month) + padzeros(date.day) + "D_IC0_" + ('N' if north else 'S') + "P.png"
+
+def downloadImage(date):
+	filename = getImageFilename(date)
+	folder = "https://ads.nipr.ac.jp/vishop/data/jaxa/data/" + str(date.year) + padzeros(date.month) + "/"
 	
+	file_object = requests.get(folder + filename) 
+	localFolder = 'images'
+	if not os.path.exists(localFolder):
+		os.makedirs(localFolder)
+	with open(localFolder + '/' + filename, 'wb') as local_file:
+		local_file.write(file_object.content)	
+
+def makeAnimation(endDate, frames):
+	animationFileName = 'animation_jaxa_sea_ice_concentration_' + ('arctic' if north else 'antarctic') + '.gif'
+	date = endDate
+	for k in range(frames):
+		downloadImage(date)
+		date = date - timedelta(days = 1)
+		time.sleep(1)
+	make_animation.makeAnimation(endDate, frames, animationFileName, lambda date: 'images/' + getImageFilename(date))
+	if putOnDropbox:
+		uploadToDropbox([animationFileName])
+	return animationFileName
+
 atotalarea = []
 atotalextent = []
 
