@@ -398,7 +398,7 @@ yesterday = datetime.today() - timedelta(days = 1)
 yesterdayYear = yesterday.year
 yesterdayDayofyear = yesterday.timetuple().tm_yday
 
-auto = False # change this to False when running the code locally
+auto = True # change this to False when running the code locally
 
 if auto:
 	north = True
