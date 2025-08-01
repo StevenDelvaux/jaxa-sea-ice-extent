@@ -228,8 +228,8 @@ def processAuto():
 	
 	extentGraphFilename =  'jaxa-' + hemisphere + '-extent.png'
 	extentAnomalyGraphFilename = 'jaxa-' + hemisphere + '-extent-anomaly.png'
-	saveExtentGraph(3 if north else 6, 13.5 if north else 20, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 3 if north else 4)
-	saveExtentGraph(-2.5 if north else -3, 0.5 if north else 2, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 3 if north else 3, True)
+	saveExtentGraph(3 if north else 10, 11.7 if north else 20.5, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 3 if north else 2)
+	saveExtentGraph(-2.5 if north else -3, 0.1 if north else 2, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 3 if north else 1, True)
 	
 	extentSummary = generateSummary(data, True)
 	extentRankSummary = generateRankSummary(data, True)
@@ -307,7 +307,7 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	
 	matrix = data[1:,1:].astype(float)
 	print(matrix.shape)
-	offset = 120 #90 #59 #31 #334
+	offset = 151 #120 #90 #59 #31 #334
 
 	if anomaly:
 		avg = np.mean((matrix[11:41,:]), axis=0)
@@ -339,12 +339,12 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	ax.set_ylabel("Sea ice extent" + (' anomaly' if anomaly else '') + " (million km$^2\!$)")
 	ax.set_title(name)
 	ax.legend(loc=legendpos, prop={'size': 8})
-	ax.axis([0, 123, ymin, ymax])
+	ax.axis([0, 122, ymin, ymax])
 	ax.grid(True);
 	
-	months = ['May', 'Jun', 'Jul','Aug']
-	ax.set_xticks([0,31,61,92,123], ['', '', '', '', '']) 
-	ax.xaxis.set_minor_locator(ticker.FixedLocator([15.5,46,76.5,107.5]))
+	months = ['Jun', 'Jul','Aug','Sep']
+	ax.set_xticks([0,30,61,92,122], ['', '', '', '', '']) 
+	ax.xaxis.set_minor_locator(ticker.FixedLocator([15,45.5,76.5,107]))
 	ax.xaxis.set_minor_formatter(ticker.FixedFormatter(months))
 	ax.tick_params(which='minor', length=0)
 	
