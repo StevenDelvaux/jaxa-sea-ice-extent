@@ -228,8 +228,8 @@ def processAuto():
 	
 	extentGraphFilename =  'jaxa-' + hemisphere + '-extent.png'
 	extentAnomalyGraphFilename = 'jaxa-' + hemisphere + '-extent-anomaly.png'
-	saveExtentGraph(3 if north else 4, 13 if north else 20.5, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 2 if north else 3)
-	saveExtentGraph(-3 if north else -3, 0 if north else 2, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 3 if north else 1, True)
+	saveExtentGraph(6 if north else 0, 15 if north else 19, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 2 if north else 3)
+	saveExtentGraph(-2.5 if north else -3, 0.5 if north else 2, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 3 if north else 1, True)
 	
 	extentSummary = generateSummary(data, True)
 	extentRankSummary = generateRankSummary(data, True)
@@ -307,7 +307,7 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	
 	matrix = data[1:,1:].astype(float)
 	print(matrix.shape)
-	offset = 242 #211 #151 #120 #90 #59 #31 #334
+	offset = 303 #211 #151 #120 #90 #59 #31 #334
 
 	if anomaly:
 		avg = np.mean((matrix[11:41,:]), axis=0)
@@ -320,31 +320,31 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 		matrix = matrix[0:-1,:]
 	dates = np.arange(0,365)
 		
-	ax.plot(dates, matrix[-16,:]-avg, label='2010', color=(0.65,0.65,0.65));
-	ax.plot(dates, matrix[-15,:]-avg, label='2011', color=(0.44,0.19,0.63));
-	ax.plot(dates, matrix[-14,:]-avg, label='2012', color=(0.0,0.13,0.38));
-	ax.plot(dates, matrix[-13,:]-avg, label='2013', color=(0,0.44,0.75));
-	ax.plot(dates, matrix[-12,:]-avg, label='2014', color=(0.0,0.69,0.94));
-	ax.plot(dates, matrix[-11,:]-avg, label='2015', color=(0,0.69,0.31));
-	ax.plot(dates, matrix[-10,:]-avg, label='2016', color=(0.57,0.82,0.31));
-	ax.plot(dates, matrix[-9,:]-avg, label='2017', color=(1.0,0.75,0));
-	ax.plot(dates, matrix[-8,:]-avg, label='2018', color=(0.9,0.4,0.05));
-	ax.plot(dates, matrix[-7,:]-avg, label='2019', color=(1.0,0.5,0.5));
-	ax.plot(dates, matrix[-6,:]-avg, label='2020', color=(0.58,0.54,0.33));
-	ax.plot(dates, matrix[-5,:]-avg, label='2021', color=(0.4,0,0.2));
-	ax.plot(dates, matrix[-4,:]-avg, label='2022', color=(0.7,0.2,0.3));
-	ax.plot(dates, matrix[-3,:]-avg, label='2023', color=(0.5,0.3,0.1));
-	ax.plot(dates, matrix[-2,:]-avg, label='2024', color=(0.75,0,0));
-	ax.plot(dates, matrix[-1,:]-avg, label='2025', color=(1.0,0,0), linewidth=3);
+	ax.plot(dates, matrix[-16,:]-avg, label='2010/11', color=(0.65,0.65,0.65));
+	ax.plot(dates, matrix[-15,:]-avg, label='2011/12', color=(0.44,0.19,0.63));
+	ax.plot(dates, matrix[-14,:]-avg, label='2012/13', color=(0.0,0.13,0.38));
+	ax.plot(dates, matrix[-13,:]-avg, label='2013/14', color=(0,0.44,0.75));
+	ax.plot(dates, matrix[-12,:]-avg, label='2014/15', color=(0.0,0.69,0.94));
+	ax.plot(dates, matrix[-11,:]-avg, label='2015/16', color=(0,0.69,0.31));
+	ax.plot(dates, matrix[-10,:]-avg, label='2016/17', color=(0.57,0.82,0.31));
+	ax.plot(dates, matrix[-9,:]-avg, label='2017/18', color=(1.0,0.75,0));
+	ax.plot(dates, matrix[-8,:]-avg, label='2018/19', color=(0.9,0.4,0.05));
+	ax.plot(dates, matrix[-7,:]-avg, label='2019/20', color=(1.0,0.5,0.5));
+	ax.plot(dates, matrix[-6,:]-avg, label='2020/21', color=(0.58,0.54,0.33));
+	ax.plot(dates, matrix[-5,:]-avg, label='2021/22', color=(0.4,0,0.2));
+	ax.plot(dates, matrix[-4,:]-avg, label='2022/23', color=(0.7,0.2,0.3));
+	ax.plot(dates, matrix[-3,:]-avg, label='2023/24', color=(0.5,0.3,0.1));
+	ax.plot(dates, matrix[-2,:]-avg, label='2024/25', color=(0.75,0,0));
+	ax.plot(dates, matrix[-1,:]-avg, label='2025/26', color=(1.0,0,0), linewidth=3);
 	ax.set_ylabel("Sea ice extent" + (' anomaly' if anomaly else '') + " (million km$^2\!$)")
 	ax.set_title(name)
 	ax.legend(loc=legendpos, prop={'size': 8})
-	ax.axis([0, 122, ymin, ymax])
+	ax.axis([0, 120, ymin, ymax])
 	ax.grid(True);
 	
-	months = ['Sep','Oct','Nov','Dec']
-	ax.set_xticks([0,30,61,91,122], ['', '', '', '', '']) 
-	ax.xaxis.set_minor_locator(ticker.FixedLocator([15,45,76,106.5]))
+	months = ['Nov','Dec','Jan','Feb']
+	ax.set_xticks([0,30,61,92,120], ['', '', '', '', '']) 
+	ax.xaxis.set_minor_locator(ticker.FixedLocator([15,45,75.5,106]))
 	ax.xaxis.set_minor_formatter(ticker.FixedFormatter(months))
 	ax.tick_params(which='minor', length=0)
 	
