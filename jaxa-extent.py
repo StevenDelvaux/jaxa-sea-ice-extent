@@ -65,7 +65,7 @@ def generateRankSummary(data, extent):
 	
 	lastSavedDay = getLatestDay(data)
 	print(lastSavedDay)
-	lastSavedYear = 2025
+	lastSavedYear = 2026
 	date = getDateFromDayOfYear(lastSavedDay, lastSavedYear)
 	
 	day = lastSavedDay-1
@@ -86,7 +86,7 @@ def generateRankSummary(data, extent):
 	smallFont = ImageFont.truetype("arialbd.ttf", smallFontsize)
 	superscriptFont = ImageFont.truetype("arialbd.ttf", superscriptFontsize)	
 	color = (0,0,0)
-	years = 47
+	years = 48
 	
 	row = matrix[:, day]
 	rank = getRank(row)
@@ -109,7 +109,7 @@ def generateRankSummary(data, extent):
 			currentRank = rank
 		verticalOffset = 60 + 21*i
 		year = 1979 + index
-		if year == 2025:
+		if year == 2026:
 			color = (255,0,0)
 		else:
 			color = (0,0,0)
@@ -126,7 +126,7 @@ def generateSummary(data, extent):
 
 	lastSavedDay = getLatestDay(data)
 	print(lastSavedDay)
-	lastSavedYear = 2025
+	lastSavedYear = 2026
 	lastSavedDate = getDateFromDayOfYear(lastSavedDay, lastSavedYear)
 	print(lastSavedDate)
 
