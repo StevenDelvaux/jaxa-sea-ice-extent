@@ -228,8 +228,8 @@ def processAuto():
 	
 	extentGraphFilename =  'jaxa-' + hemisphere + '-extent.png'
 	extentAnomalyGraphFilename = 'jaxa-' + hemisphere + '-extent-anomaly.png'
-	saveExtentGraph(10 if north else 0, 15 if north else 13, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 3 if north else 3)
-	saveExtentGraph(-1.5 if north else -2.5, 0.5 if north else 2, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 3 if north else 3, True)
+	saveExtentGraph(8 if north else 0, 15 if north else 17, data, "JAXA " + hemisphereCapitalized + " sea ice extent", extentGraphFilename, 3 if north else 2)
+	saveExtentGraph(-1.5 if north else -3, 0.5 if north else 2, data, "JAXA " + hemisphereCapitalized + " sea ice extent anomaly vs. 1990-2019", extentAnomalyGraphFilename, 3 if north else 3, True)
 	
 	extentSummary = generateSummary(data, True)
 	extentRankSummary = generateRankSummary(data, True)
@@ -307,7 +307,7 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	
 	matrix = data[1:,1:].astype(float)
 	print(matrix.shape)
-	offset = 31#0 #303 #211 #151 #120 #90 #59 #31 #334
+	offset = 59#31#0 #303 #211 #151 #120 #90 #59 #31 #334
 
 	if anomaly:
 		avg = np.mean((matrix[11:41,:]), axis=0)
@@ -340,12 +340,12 @@ def plotExtentGraph(data, ax, ymin, ymax, name, legendpos=1, anomaly=False):
 	ax.set_ylabel("Sea ice extent" + (' anomaly' if anomaly else '') + " (million km$^2\!$)")
 	ax.set_title(name)
 	ax.legend(loc=legendpos, prop={'size': 8})
-	ax.axis([0, 120, ymin, ymax])
+	ax.axis([0, 122, ymin, ymax])
 	ax.grid(True);
 	
-	months = ['Feb','Mar','Apr','May']
-	ax.set_xticks([0,28,59,89,120], ['', '', '', '', '']) 
-	ax.xaxis.set_minor_locator(ticker.FixedLocator([14,43.5,74,104.5]))
+	months = ['Mar','Apr','May','Jun']
+	ax.set_xticks([0,31,61,92,122], ['', '', '', '', '']) 
+	ax.xaxis.set_minor_locator(ticker.FixedLocator([15.5,46,76.5,107]))
 	ax.xaxis.set_minor_formatter(ticker.FixedFormatter(months))
 	ax.tick_params(which='minor', length=0)
 	
