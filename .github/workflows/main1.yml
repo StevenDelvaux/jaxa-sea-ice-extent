@@ -3,7 +3,7 @@ name: Run Python Script Daily Test
 on:
   schedule:
     # Run at 3:50 a.m. UTC every day. Updated because of long GitHub delays
-    - cron: '50 2 * * 1-5' 
+    - cron: '50 3 * * 1-5' 
     - cron: '50 3 * * 0,6' 
 
 jobs:
