@@ -235,7 +235,10 @@ def processAuto():
 	extentRankSummary = generateRankSummary(data, True)
 	
 	if putOnDropbox:
-		makeAnimation(yesterday, 10)
+		try:
+			makeAnimation(yesterday, 10)
+		except:
+			print('an exception occurred in JAXA animation')
 		uploadToDropbox([filename + '.csv', extentGraphFilename, extentAnomalyGraphFilename, extentSummary, extentRankSummary])
 
 def downloadJaxaExtentFile(north, localfilename):
